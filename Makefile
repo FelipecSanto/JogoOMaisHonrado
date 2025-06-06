@@ -8,23 +8,22 @@ CPP_FILES := $(wildcard src/*.cpp)
 OBJ_FILES := $(patsubst src/%.cpp,$(OBJ_DIR)/%.o,$(CPP_FILES))
 
 # Compilação dos arquivos .cpp para arquivos .o 
-$(OBJ_DIR)/%.o: src/%.cpp
-	g++ -c	-Iinclude \
-	-ISFML/include \
+$(OBJ_DIR)/%.o: src/%.cpp | create_obj_dir
+	g++ -c -Iinclude \
 	-Iinclude/Entes \
-    $< -o $@
+	$< -o $@
 
 # Regra padrão para construir o executável
-all: create_obj_dir clear compile link
+all: clear compile link
 
 # Regra para criar o diretório de objetos
 create_obj_dir:
-	@if not exist $(OBJ_DIR) mkdir $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)
 
 compile: $(OBJ_FILES)
-	
+    
 link:
-	g++ $(OBJ_FILES) -o main -LSFML/lib -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio
+	g++ $(OBJ_FILES) -o main -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 # Regra para rodar o executável
 run:
@@ -32,9 +31,9 @@ run:
 
 # Limpar os arquivos .o e o executável
 clear:
-	@if exist $(OBJ_DIR)/*.o del /Q $(OBJ_DIR)\*.o
-	@if exist main del main
+	rm -f $(OBJ_DIR)/*.o main
 
+.PHONY: all create_obj_dir compile link run clear
 
 # Como usar o Makefile
 # make all -> Compila tudo e gera o executável (apaga os arquivos .o e o executável antigos)

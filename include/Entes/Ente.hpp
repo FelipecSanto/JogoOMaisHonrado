@@ -1,16 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "../Managers/GraphicsManager.hpp"
 
 class Ente {
-private:
-    sf::RectangleShape shape;
-    const float speed;
+protected:
+    Managers::GraphicsManager* graphicsMgr;
 
 public:
     Ente();
     ~Ente();
-
-    void move(char direction);
-    void draw(sf::RenderWindow& window);
-
 };
