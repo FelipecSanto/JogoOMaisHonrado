@@ -12,7 +12,7 @@ Certifique-se de ter os seguintes pacotes instalados:
 
 - `GCC/G++`
 - `SFML`  
-  _No Fedora:_
+  _No Linux Fedora:_
 
   ```bash
   sudo dnf install SFML SFML-devel
